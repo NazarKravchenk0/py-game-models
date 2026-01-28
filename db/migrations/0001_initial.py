@@ -12,10 +12,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Guild",
             fields=[
-                ("id", models.BigAutoField(auto_created=True,
-                                           primary_key=True,
-                                           serialize=False,
-                                           verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("name", models.CharField(max_length=255, unique=True)),
                 ("description", models.TextField(blank=True, null=True)),
             ],
@@ -23,10 +28,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Race",
             fields=[
-                ("id", models.BigAutoField(auto_created=True,
-                                           primary_key=True,
-                                           serialize=False,
-                                           verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("name", models.CharField(max_length=255, unique=True)),
                 ("description", models.TextField(blank=True)),
             ],
@@ -34,42 +44,61 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Skill",
             fields=[
-                ("id", models.BigAutoField(auto_created=True,
-                                           primary_key=True,
-                                           serialize=False,
-                                           verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("name", models.CharField(max_length=255, unique=True)),
                 ("bonus", models.CharField(max_length=255)),
-                ("race", models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    related_name="skills",
-                    to="db.race",
-                )),
+                (
+                    "race",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="skills",
+                        to="db.race",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name="Player",
             fields=[
-                ("id", models.BigAutoField(auto_created=True,
-                                           primary_key=True,
-                                           serialize=False,
-                                           verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("nickname", models.CharField(max_length=255, unique=True)),
                 ("email", models.EmailField(max_length=255)),
                 ("bio", models.CharField(max_length=255)),
                 ("created_at", models.DateTimeField(default=timezone.now)),
-                ("guild", models.ForeignKey(
-                    blank=True,
-                    null=True,
-                    on_delete=django.db.models.deletion.SET_NULL,
-                    related_name="players",
-                    to="db.guild",
-                )),
-                ("race", models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    related_name="players",
-                    to="db.race",
-                )),
+                (
+                    "guild",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="players",
+                        to="db.guild",
+                    ),
+                ),
+                (
+                    "race",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="players",
+                        to="db.race",
+                    ),
+                ),
             ],
         ),
     ]

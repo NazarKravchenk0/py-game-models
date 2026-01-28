@@ -10,9 +10,17 @@ def _extract_players(data: Any) -> list[dict]:
         return data
 
     if isinstance(data, dict):
-        if "players" in data and isinstance(data["players"], list):
-            return data["players"]
-        return [v for v in data.values() if isinstance(v, dict)]
+        players_list = data.get("players")
+        if isinstance(players_list, list):
+            return players_list
+
+        result: list[dict] = []
+        for nickname, details in data.items():
+            if isinstance(details, dict):
+                item = dict(details)
+                item.setdefault("nickname", nickname)
+                result.append(item)
+        return result
 
     return []
 
@@ -65,16 +73,15 @@ def main() -> None:
         guild_raw = player_data.get("guild")
 
         if isinstance(guild_raw, str):
-            guild_obj, _ = Guild.objects.get_or_create(
-                name=guild_raw,
-                defaults={"description": None},
-            )
+            if guild_raw:
+                guild_obj, _ = Guild.objects.get_or_create(
+                    name=guild_raw,
+                    defaults={"description": None},
+                )
         elif isinstance(guild_raw, dict):
             guild_obj, _ = Guild.objects.get_or_create(
                 name=guild_raw.get("name", ""),
-                defaults={
-                    "description": guild_raw.get("description"),
-                },
+                defaults={"description": guild_raw.get("description")},
             )
 
         Player.objects.update_or_create(
