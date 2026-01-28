@@ -73,7 +73,8 @@ def main() -> None:
         guild_raw = player_data.get("guild")
 
         if isinstance(guild_raw, str):
-            guild_obj, _ = Guild.objects.get_or_create(name=guild_raw, defaults={"description": None})
+            guild_obj, _ = Guild.objects.get_or_create(name=guild_raw,
+                                                       defaults={"description": None})
         elif isinstance(guild_raw, dict):
             guild_obj, _ = Guild.objects.get_or_create(
                 name=guild_raw.get("name", ""),
